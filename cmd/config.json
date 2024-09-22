@@ -1,0 +1,4 @@
+{
+  "default_driver": "json",
+  "log_file_path": "app.log"
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "level": "INFO",
+    "message": "[Transaction a3124] Transaction started",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-18T19:13:25+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "DEBUG",
+    "message": "[Transaction a3124] This log uses the default driver",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-18T19:13:25+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "DEBUG",
+    "message": "[Transaction a3124] This is the second log",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-18T19:13:25+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "INFO",
+    "message": "[Transaction a3124] Transaction ended",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-18T19:13:25+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "INFO",
+    "message": "[Transaction a3124] Transaction started",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-19T10:47:35+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "DEBUG",
+    "message": "[Transaction a3124] This log uses the default driver",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-19T10:47:35+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "DEBUG",
+    "message": "[Transaction a3124] This is the second log",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-19T10:47:35+02:00",
+      "transaction_id": "a3124"
+    }
+  },
+  {
+    "level": "INFO",
+    "message": "[Transaction a3124] Transaction ended",
+    "tags": {
+      "a": "Hello",
+      "b": "Hi",
+      "timestamp": "2024-09-19T10:47:35+02:00",
+      "transaction_id": "a3124"
+    }
+  }
+]
