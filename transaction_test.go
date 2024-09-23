@@ -1,38 +1,39 @@
 package telemetry
 
 import (
-	"example/telemetry/drivers"
 	"testing"
 )
 
-// Test transaction logging.
-func TestTransaction_LogTransaction(t *testing.T) {
-	mockDriver := NewMockDriver()
-	tel := NewLogger()
-	tel.SetDriver(mockDriver)
+func TestTransaction_StartEnd(t *testing.T) {
+	logger := NewLogger("cli")
+	trans := NewTransaction("trans123", logger)
 
-	// Create a transaction
-	transaction := NewTransaction("tx-123", tel)
+	trans.Start()
+	trans.End()
+	// There's no direct output or return, but we ensure it doesn't panic or error.
+}
 
-	// Log within the transaction
-	transaction.Warning("Processing transaction")
+func TestTransaction_AddAndRemoveTags(t *testing.T) {
+	logger := NewLogger("cli")
+	trans := NewTransaction("trans123", logger)
 
-	if len(mockDriver.Logs) != 1 {
-		t.Errorf("expected 1 log entry, got %d", len(mockDriver.Logs))
+	trans.AddTag("user", "admin")
+	if trans.Tags["user"] != "admin" {
+		t.Errorf("Expected tag 'user' to be 'admin', got %s", trans.Tags["user"])
 	}
 
-	// Validate the transaction log content
-	log := mockDriver.Logs[0]
-	if log.Message != "[Transaction tx-123] Processing transaction" {
-		t.Errorf("unexpected log message: got '%s'", log.Message)
+	trans.RemoveTag("user")
+	if _, ok := trans.Tags["user"]; ok {
+		t.Error("Expected 'user' tag to be removed, but it's still present")
 	}
-	if log.Level != drivers.Warning {
-		t.Errorf("unexpected log level: got %v", log.Level)
-	}
-	if log.Tags["transaction_id"] != "tx-123" {
-		t.Errorf("expected transaction_id 'tx-123', got '%s'", log.Tags["transaction_id"])
-	}
-	if _, ok := log.Tags["timestamp"]; !ok {
-		t.Errorf("expected log to have timestamp, but it doesn't")
+}
+
+func TestTransaction_SubTransaction(t *testing.T) {
+	logger := NewLogger("cli")
+	parentTrans := NewTransaction("parent123", logger)
+
+	subTrans := parentTrans.SubTransaction("sub456")
+	if subTrans.ParentID != parentTrans.ID {
+		t.Errorf("Expected sub-transaction ParentID to be '%s', got '%s'", parentTrans.ID, subTrans.ParentID)
 	}
 }

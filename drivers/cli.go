@@ -5,17 +5,27 @@ import (
 )
 
 // CLIDriver outputs logs to the CLI.
-type CLIDriver struct{}
+type CLIDriver struct {
+	timestampFormat string
+}
 
 // NewCLIDriver initializes a new CLIDriver
-func NewCLIDriver() *CLIDriver {
-	return &CLIDriver{}
+func NewCLIDriver(driverConfig DriverConfig) *CLIDriver {
+	return &CLIDriver{
+		timestampFormat: driverConfig.TimestampFormat,
+	}
 }
 
 // Log implements the Driver interface for CLI logging.
-func (d *CLIDriver) Log(message string, level LogLevel, tags map[string]string) {
-	fmt.Printf("[%s] %s - %s\n", tags["timestamp"], levelToString(level), message)
-	for k, v := range tags {
+func (d *CLIDriver) Log(entry LogEntry) {
+	var transString string
+	if entry.ParentTransactionID != "" {
+		transString = fmt.Sprintf("[Transaction %s] -> [SubTransaction %s]", entry.ParentTransactionID, entry.TransactionID)
+	} else {
+		transString = fmt.Sprintf("[Transaction %s]", entry.TransactionID)
+	}
+	fmt.Printf("[%s] %s - %s %s\n", entry.Timestamp.Format(d.timestampFormat), levelToString(entry.Level), transString, entry.Message)
+	for k, v := range entry.Tags {
 		if k != "timestamp" {
 			fmt.Printf(" %s: %s\n", k, v)
 		}

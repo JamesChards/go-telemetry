@@ -33,4 +33,9 @@ func main() {
 	})
 	myTrans.Debug("This is the second log")
 	myTrans.End()
+
+	subTrans := myTrans.SubTransaction("subtrans")
+	subTrans.Start()
+	subTrans.AddTag("abc", "Hello")
+	subTrans.End()
 }

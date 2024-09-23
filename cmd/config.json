@@ -1,4 +1,22 @@
 {
-  "default_driver": "json",
-  "log_file_path": "app.log"
+  "drivers": {
+    "cli": {
+      "timestamp_format": "02 Jan 06 15:04 MST"
+    },
+    "text": {
+      "log_file_path": "app-text.log",
+      "max_size": 10,
+      "max_backups": 5,
+      "max_age": 30,
+      "timestamp_format": "02 Jan 06 15:04 MST"
+    },
+    "json": {
+      "log_file_path": "app-json.log",
+      "max_size": 10,
+      "max_backups": 5,
+      "max_age": 30,
+      "timestamp_format": "2006-01-02T15:04:05Z07:00"
+    }
+  },
+  "default_driver": "json"
 }

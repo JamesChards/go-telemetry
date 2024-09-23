@@ -1,0 +1,21 @@
+[2024-09-23T15:55:12+02:00] INFO: [Transaction a3124] Transaction started
+  b: Hi
+  transaction_id: a3124
+  a: Hello
+[2024-09-23T15:55:12+02:00] DEBUG: [Transaction a3124] This log uses the default driver
+  transaction_id: a3124
+  a: Hello
+  b: Hi
+[2024-09-23T15:55:12+02:00] DEBUG: [Transaction a3124] This is the second log
+  first: hello
+  second: hi
+[2024-09-23T15:55:12+02:00] INFO: [Transaction a3124] Transaction ended
+  second: hi
+  first: hello
+[2024-09-23T15:55:12+02:00] INFO: [Transaction a3124] -> [SubTransaction subtrans] Transaction started
+  transaction_id: subtrans
+  parent_transaction_id: a3124
+[2024-09-23T15:55:12+02:00] INFO: [Transaction a3124] -> [SubTransaction subtrans] Transaction ended
+  transaction_id: subtrans
+  parent_transaction_id: a3124
+  abc: Hello

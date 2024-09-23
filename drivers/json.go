@@ -3,88 +3,61 @@ package drivers
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"os"
 	"sync"
+
+	"github.com/natefinch/lumberjack"
 )
 
 // JSONDriver writes logs as JSON to a file.
 type JSONDriver struct {
-	file *os.File
-	mu   sync.Mutex // Add a mutex to protect file writes
+	logger          *lumberjack.Logger
+	mu              sync.Mutex // Add a mutex to protect file writes
+	timestampFormat string
 }
 
 // NewJSONDriver creates a new instance of JSONDriver.
-func NewJSONDriver(filepath string) (*JSONDriver, error) {
-	file, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0644)
-	if err != nil {
-		return nil, err
+func NewJSONDriver(driverConfig DriverConfig) *JSONDriver {
+	return &JSONDriver{
+		logger: &lumberjack.Logger{
+			Filename:   driverConfig.LogFilePath,
+			MaxSize:    driverConfig.MaxSize,    // megabytes
+			MaxBackups: driverConfig.MaxBackups, // number of backups
+			MaxAge:     driverConfig.MaxAge,     // days
+			Compress:   true,                    // compress old log files
+		},
+		timestampFormat: driverConfig.TimestampFormat,
 	}
-
-	return &JSONDriver{file: file}, nil
 }
 
 // Log implements the Driver interface for JSON logging.
-func (d *JSONDriver) Log(message string, level LogLevel, tags map[string]string) {
+func (d *JSONDriver) Log(entry LogEntry) {
 	d.mu.Lock()         // Lock before writing to the file
 	defer d.mu.Unlock() // Unlock after the write is done
 
-	// Read the existing contents
-	fileInfo, err := d.file.Stat()
-	if err != nil {
-		fmt.Println("Error getting file info:", err)
-		return
+	// Prepare the log entry in JSON format
+	jsonEntry := map[string]interface{}{
+		"message":   entry.Message,
+		"level":     levelToString(entry.Level),
+		"tags":      entry.Tags,
+		"timestamp": entry.Timestamp.Format(d.timestampFormat),
 	}
-	fileSize := fileInfo.Size()
-
-	// Move to the start of the file to read its contents
-	_, err = d.file.Seek(0, io.SeekStart)
-	if err != nil {
-		fmt.Println("Error seeking file:", err)
-		return
-	}
-	content, err := io.ReadAll(d.file)
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
+	if entry.ParentTransactionID != "" {
+		jsonEntry["transaction_id"] = entry.ParentTransactionID
+		jsonEntry["sub_transaction_id"] = entry.TransactionID
+	} else {
+		jsonEntry["transaction_id"] = entry.TransactionID
 	}
 
-	var jsonArray []map[string]interface{}
-	if fileSize > 0 {
-		// Try to decode existing JSON content
-		if content[0] == '[' {
-			json.Unmarshal(content, &jsonArray)
-		}
-	}
-
-	// Create new log entry
-	entry := map[string]interface{}{
-		"message": message,
-		"level":   levelToString(level),
-		"tags":    tags,
-	}
-	jsonArray = append(jsonArray, entry)
-
-	// Truncate the file and write the new JSON array
-	err = d.file.Truncate(0)
-	if err != nil {
-		fmt.Println("Error truncating file:", err)
-		return
-	}
-	_, err = d.file.Seek(0, io.SeekStart)
-	if err != nil {
-		fmt.Println("Error seeking file:", err)
-		return
-	}
-	// Add indent to json array
-	data, err := json.MarshalIndent(jsonArray, "", "  ")
+	// Marshal the log entry to JSON
+	data, err := json.Marshal(jsonEntry)
 	if err != nil {
 		fmt.Println("Error marshalling JSON:", err)
 		return
 	}
-	_, err = d.file.Write(data)
-	if err != nil {
-		fmt.Println("Error writing to file:", err)
+
+	// Write the JSON entry followed by a newline character
+	if _, err := d.logger.Write(append(data, '\n')); err != nil {
+		fmt.Println("Error writing to JSON log file:", err)
 		return
 	}
 }
@@ -94,5 +67,5 @@ func (d *JSONDriver) Close() error {
 	d.mu.Lock() // Lock during closing to prevent concurrent access
 	defer d.mu.Unlock()
 
-	return d.file.Close()
+	return d.logger.Close()
 }
