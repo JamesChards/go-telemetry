@@ -19,8 +19,8 @@ This repository contains a **telemetry and logging system** written in Go. The s
 - [Configuration](#configuration)
 - [Logging Drivers](#logging-drivers)
 - [Testing](#testing)
+- [Areas for Improvement](#areas-for-improvement)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
@@ -174,7 +174,7 @@ func TestLogManager_Log(t *testing.T) {
 }
 ```
 
-## Areas for Improvement:
+## Areas for Improvement
 
 ### Log Retrieval for a Specific Process:
 
