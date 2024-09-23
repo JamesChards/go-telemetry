@@ -55,7 +55,8 @@ import (
 func main() {
     logger := telemetry.NewLogger("cli")
 
-    logger.SetDriverWithName("cli") // Set CLI as the output driver
+    // in case when you need to change the driver
+    logger.SetDriverWithName("json") // Set JSON as the output driver
 
     // Add tags
     logger.AddTag("environment", "production")
