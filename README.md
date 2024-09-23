@@ -178,18 +178,18 @@ func TestLogManager_Log(t *testing.T) {
 
 ### Log Retrieval for a Specific Process:
 
-Issue: While this code can tag logs with process-specific data (like transaction_id and parent_transaction_id), there is no mechanism in place to retrieve logs for a specific process or sub-process. The current code focuses on logging, but not on log retrieval.
-Solution: To retrieve logs for a process, you need to introduce a mechanism to filter logs based on specific tags (e.g., transaction_id). This could be handled by extending the driver interface to support querying logs, or you could design a separate log processor that filters logs from the stored files based on tags.
+- **Issue**: While this code can tag logs with process-specific data (like transaction_id and parent_transaction_id), there is no mechanism in place to retrieve logs for a specific process or sub-process. The current code focuses on logging, but not on log retrieval.
+- **Solution**: To retrieve logs for a process, you need to introduce a mechanism to filter logs based on specific tags (e.g., transaction_id). This could be handled by extending the driver interface to support querying logs, or you could design a separate log processor that filters logs from the stored files based on tags.
 
 ### Asynchronous or Buffered Logging for Large Processes:
 
-Issue: For long-running processes (e.g., an order import with many child processes), synchronous I/O operations may slow down the process, especially if logging is frequent or involves file I/O.
-Solution: Consider adding asynchronous logging (using channels or a log queue) to decouple the log-writing process from the actual application logic. This will improve performance, especially in high-volume processes.
+- **Issue**: For long-running processes (e.g., an order import with many child processes), synchronous I/O operations may slow down the process, especially if logging is frequent or involves file I/O.
+- **Solution**: Consider adding asynchronous logging (using channels or a log queue) to decouple the log-writing process from the actual application logic. This will improve performance, especially in high-volume processes.
 
 ### Log Contextualization:
 
-Issue: The logger writes logs based on the current tags, but there is no concept of a "logging context" that could be propagated across function calls and processes.
-Solution: You could introduce a logging context (possibly using Go's context.Context) that automatically carries metadata (tags) across the entire process lifecycle, including sub-processes. This will ensure that tags are passed along naturally without needing explicit calls to SetTags.
+- **Issue**: The logger writes logs based on the current tags, but there is no concept of a "logging context" that could be propagated across function calls and processes.
+- **Solution**: You could introduce a logging context (possibly using Go's context.Context) that automatically carries metadata (tags) across the entire process lifecycle, including sub-processes. This will ensure that tags are passed along naturally without needing explicit calls to SetTags.
 
 ## Contributing
 
