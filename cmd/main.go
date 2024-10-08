@@ -1,8 +1,9 @@
 package main
 
 import (
-	"example/telemetry"
 	"fmt"
+
+	"github.com/JamesChards/telemetry"
 )
 
 func main() {

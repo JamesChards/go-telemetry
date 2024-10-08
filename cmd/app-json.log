@@ -1,0 +1,12 @@
+{"level":"INFO","message":"Transaction started","tags":{"a":"Hello","b":"Hi","transaction_id":"a3124"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"DEBUG","message":"This log uses the default driver","tags":{"a":"Hello","b":"Hi","transaction_id":"a3124"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"DEBUG","message":"This is the second log","tags":{"first":"hello","second":"hi"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction ended","tags":{"first":"hello","second":"hi"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction started","sub_transaction_id":"subtrans","tags":{"parent_transaction_id":"a3124","transaction_id":"subtrans"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction ended","sub_transaction_id":"subtrans","tags":{"abc":"Hello","parent_transaction_id":"a3124","transaction_id":"subtrans"},"timestamp":"2024-10-08T07:45:30+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction started","tags":{"a":"Hello","b":"Hi","transaction_id":"a3124"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
+{"level":"DEBUG","message":"This log uses the default driver","tags":{"a":"Hello","b":"Hi","transaction_id":"a3124"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
+{"level":"DEBUG","message":"This is the second log","tags":{"first":"hello","second":"hi"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction ended","tags":{"first":"hello","second":"hi"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction started","sub_transaction_id":"subtrans","tags":{"parent_transaction_id":"a3124","transaction_id":"subtrans"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
+{"level":"INFO","message":"Transaction ended","sub_transaction_id":"subtrans","tags":{"abc":"Hello","parent_transaction_id":"a3124","transaction_id":"subtrans"},"timestamp":"2024-10-08T07:45:40+02:00","transaction_id":"a3124"}
