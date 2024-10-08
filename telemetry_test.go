@@ -1,8 +1,9 @@
 package telemetry
 
 import (
-	"example/telemetry/drivers"
 	"testing"
+
+	"github.com/JamesChards/go-telemetry/drivers"
 )
 
 func TestLogManager_SetDriverWithName(t *testing.T) {

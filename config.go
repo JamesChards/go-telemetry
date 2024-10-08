@@ -2,9 +2,10 @@ package telemetry
 
 import (
 	"encoding/json"
-	"example/telemetry/drivers"
 	"os"
 	"time"
+
+	"github.com/JamesChards/go-telemetry/drivers"
 )
 
 const CONFIG_FILE = "config.json"

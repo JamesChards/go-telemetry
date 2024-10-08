@@ -1,4 +1,4 @@
-module example/telemetry
+module github.com/JamesChards/go-telemetry
 
 go 1.22.4
 

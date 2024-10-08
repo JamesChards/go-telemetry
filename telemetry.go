@@ -1,9 +1,10 @@
 package telemetry
 
 import (
-	"example/telemetry/drivers"
 	"io"
 	"time"
+
+	"github.com/JamesChards/go-telemetry/drivers"
 )
 
 // LogManager holds the logger configuration and the active driver.
