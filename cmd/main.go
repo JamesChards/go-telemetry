@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/JamesChards/telemetry"
+	telemetry "github.com/JamesChards/go-telemetry"
 )
 
 func main() {
