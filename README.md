@@ -1,4 +1,4 @@
-# Logging System in Go *
+# Logging System in Go
 
 This repository contains a **telemetry and logging system** written in Go. The system is highly extensible and supports various output formats and drivers for logging (CLI, JSON, and text files). The system also includes a transaction system for tagging, tracing, and monitoring transactions across the application.
 
